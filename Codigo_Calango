@@ -1,0 +1,180 @@
+algoritmo Trabalho_APC;
+// Síntese
+//  Objetivo:Ajudar professores de ensino médio e fundamental a identificar os alunos de recuperação e ajudar os alunos a entender o seu rendimento no semestre.
+//  Entrada :Caso seja para o uso do professor deve entrar o número de turmas, a quantidade de alunos por turma e o nome e nota de cada aluno.
+			//Caso seja para o uso do aluno deve entrar a quantidade de matérias, a carga horáia de cada uma das matérias e a média semestral de cada matéria 
+//  Saída   :Para o professor deverá sair dependendo do pedido dele, ou a nota dos alunos com seus respectivos nomes ou os nomes dos alunos de recuperação.
+			//Para o aluno deverá sair o valor de seu rendimento.
+
+
+principal
+	// Declarações
+	inteiro quantTurmas, quantAlunos, i, j, z, aux, l,  entrada, inicio, quantHoras, quantMat, soma2;
+	real  soma, media, notarecupera[100], notas, mediaMat, soma3, mult, rendimento;
+	texto alunos[100], aluno, alunorecupera[100], enter;
+	real nota[100];
+	// Instruções
+	soma =0;
+	media = 0;
+	entrada = 3;
+	aux=0;
+	inicio=2;//CALCULO DA MEDIA DE CADA TURMA
+	escreval("  "); 
+	escreval("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+	escreval("---------------------------- SEJA BEM VINDO (A) --------------------------------");
+	escreval("  ");
+	escreval("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+	escreval("  ");
+	escreva("Para avaliar turma ---------------------------------");
+	escreva("Digite 1  -");
+	escreval("PROFESSOR");
+	escreva("Para calcular seu rendimento no semestre------------");
+	escreva("Digite 2  -");
+	escreval("ALIUNO");
+	escreval("  ");
+	escreval("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
+	escreval("  ");
+	escreva("Digite sua escolha:  ");
+	leia(inicio);
+	escreval("  ");
+
+
+	escolha(inicio)
+	caso 1
+		//MEDIA DE NOTAS DAS TURMAS
+		// LEITURA DE DADOS
+		escreval("------------------------------ PROFESSOR ------------------------------------------------");
+		escreval(" ");
+		escreval("Digite a quantidade de turmas que serão avaliadas. ");
+		leia (quantTurmas);
+		para(i de 0 ate quantTurmas -1 passo 1)faca
+			escreval("Digite a quatidade de alunos da turma ", i +1);
+			leia(quantAlunos );
+			escreval(" ");
+			escreval("Digite o nome e nota dos alunos");
+			//CALCULO DA MEDIA DE CADA TURMA
+			para(j de 0 ate quantAlunos-1 passo 1 )faca
+				leia (alunos[j]);
+				leia (nota[j]);
+				soma = soma + nota[j];
+			fimPara
+			media = soma/quantAlunos;
+			escreval("---------------------------------------------------------------------------------------------");
+			escreval("  ");
+			escreval("	Media Turma"," ", i+1," - ", media::2);
+			escreval("  ");
+			escreval("----------------------------------------------------------------------------------------------");
+			media = 0;
+			soma=0;
+			// MOSTRAR QUAL A SEQUENCIA DAS NOTAS DOS ALUNOS EM ORDEM DECRESCENTE
+			para(j de 0 ate quantAlunos-1 passo 1)faca
+				para(z de j ate quantAlunos-1 passo 1)faca
+					se (nota [j]< nota[z])entao
+						notas = nota[j];
+						nota[j]=nota[z];
+						nota[z]= notas;
+						aluno = alunos[j];
+						alunos[j] = alunos[z];
+						alunos[z]= aluno;
+					fimSe
+				fimPara
+				//MOSTRAR OS ALUNOS DE RECUPERAÇÃO E SUAS NOTAS
+			fimPara
+			para(j de 0 ate quantAlunos-1 passo 1 )faca
+				se (nota[j]<5)entao
+					notarecupera[aux]= nota[j];
+					alunorecupera[aux]=alunos[j];
+					aux=aux+1;
+				fimSe
+			fimPara
+			//ESCOLHER O QUE DESEJA
+			escreva("Receber as notas e os nomes dos alunos--------------");
+			escreval("Digite 1");
+			escreva("Receber nota e nome dos alunos de recuperção--------");
+			escreval("Digite 2");
+			escreval("  ");
+			escreva("Digite sua escolha:  ");
+			leia (entrada);
+			escreval("  ");
+			escreval("  ");
+			escreval("  ");
+			escolha(entrada)
+			caso 1
+				escreval("------------------------------------------------------------------------------------------------------------");
+				escreval("  ");
+				escreval("Sequencia de notas ");
+				para(j de 0 ate quantAlunos-1 passo 1)faca
+					escreval(" ", j+1,"- ", alunos[j], "- " , nota[j]);
+					escreval("  ");
+				fimPara
+				interrompa;
+			caso 2
+				escreval("------------------------------------------------------------------------------------------------------------");
+				escreval("  ");
+				escreval("Recuperação ");
+				para(j de 0 ate aux-1 passo 1)faca
+					escreval (j+1, " - ", alunorecupera[j]," -- ", notarecupera[j]);
+					escreval("  ");
+				fimPara
+				interrompa;
+			outroCaso
+				pedido_nao_existe();
+			fimEscolha
+			quantAlunos = 0;
+			aux=0;
+		fimPara
+		interrompa;
+	caso 2
+		mult=0;
+		soma2=0;
+		soma3=0;
+		//MOSTRAR RENDIMENTO DO ALUNO
+		escreval("  " );
+		escreval("--------------------------- RENDIMENTO DO ALUNO --------------------------------");
+		escreval("  ");
+		escreval("        *Para calcular seu rendimento precisamos de:");
+		escreval("*Sua média semestral nas disciplina ");
+		escreval("*A carga horária de cada disciplina ");
+		escreval("------------------------------------------------------------------------------------------------------------");
+		escreval("  ");
+		escreval("Digite a quantidade de matérias do semestre.");
+		leia(quantMat);
+		escreval("  ");
+		para (l de 0 ate quantMat-1 passo 1)faca
+			escreval("-----------------------------------------------------------------------------------------------------------");
+			escreval("Digite a carga horária da disciplina ", l+1, ".");
+			leia(quantHoras);
+			escreval("  ");
+			escreval("Digite a sua média nessa disciplina  ", l+1, ". ");
+			leia(mediaMat);
+			escreval("  ");
+			soma2 = soma2 + quantHoras;
+			mult= quantHoras*mediaMat;
+			soma3= soma3+mult;
+		fimPara
+		escreval("----------------------------------------------------------------------------------------------------------");
+		escreval("  ");
+		rendimento=soma3/soma2;
+		escreval("     RENDIMENTO FINAL  - ", rendimento::2 );
+		escreval("  ");
+		escreval("-Rendimento:de 9 até 10 ___EXCELENTE  ");
+		escreval("-Rendimento:de 8 até 8,9 ___BOM");
+		escreval("-Rendimento:de 5 até 7,9 ___REGULAR");
+		escreval("-Rendimento: menor que 5 ___PÉSSIMO");
+		escreval("  ");
+		escreval("---------------------------------------------------------------------------------------------------------");
+		interrompa;
+	outroCaso
+		pedido_nao_existe();
+	fimEscolha
+
+fimPrincipal
+
+procedimento pedido_nao_existe()
+	escreval("***********************************************************************************************");
+	escreval("  ");
+	escreval("                   O PEDIDO FEITO NÃO EXISTE");
+	escreval("  ");
+	escreval("***********************************************************************************************");
+fimProcedimento
+
